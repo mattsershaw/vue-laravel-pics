@@ -1,25 +1,10 @@
-const state = {
-  user: null
-}
+const state = {}
 
 const getters = {}
 
-const mutations = {
-  setUser (state, user) {
-    state.user = user
-  }
-}
+const mutations = {}
 
-const actions = {
-  async register (context, data) {
-    const response = await axios.post('/api/register', data)
-    context.commit('setUser', response.data)
-  },
-  async login (context, data) {
-    const response = await axios.post('/api/login', data)
-    context.commit('setUser', response.data)
-  }
-}
+const actions = {}
 
 export default {
   namespaced: true,

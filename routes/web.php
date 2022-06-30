@@ -13,10 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// 以下、元からの記述をコメントアウト
 
-Auth::routes();
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+// APIのURL以外のリクエストに対してはindexテンプレートを返す
+// 画面遷移はフロントエンドのVueRouterが制御する
+Route::get('/{any?}', fn() => view('index'))->where('any', '.+');

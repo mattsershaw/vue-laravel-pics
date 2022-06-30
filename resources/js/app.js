@@ -1,9 +1,10 @@
+import './bootstrap'
 import Vue from 'vue'
 // ルーティングの定義をインポートする
 import router from './router'
 // ルートコンポーネントをインポートする
 import App from './App.vue'
-// import store from './store'
+import store from './store'
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -37,7 +38,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 new Vue({
     el: '#app',
     router, // ルーティングの定義を読み込む
-    // store,
+    store,
     components: { App }, // ルートコンポーネントの使用を宣言する
     template: '<App />' // ルートコンポーネントを描画する
     // template: '<h1>Hello world</h1>'

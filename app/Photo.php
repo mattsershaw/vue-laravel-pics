@@ -74,4 +74,6 @@ class Photo extends Model
     protected $appends = [
         'url',
     ];
+
+    protected $perPage = 15;
 }

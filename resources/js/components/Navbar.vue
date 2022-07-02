@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <RouterLink class="navbar__brand" to="/">
-      Vuesplash
+      vue-laravel-pics
     </RouterLink>
     <div class="navbar__menu">
       <div v-if="isLogin" class="navbar__item">
@@ -23,7 +23,16 @@
 </template>
 
 <script>
+import PhotoForm from './PhotoForm.vue'
 export default {
+  components: {
+    PhotoForm
+  },
+  data () {
+    return {
+      showForm: false
+    }
+  },
   computed: {
     isLogin () {
       return this.$store.getters['auth/check']

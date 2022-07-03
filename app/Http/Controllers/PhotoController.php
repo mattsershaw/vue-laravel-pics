@@ -56,4 +56,25 @@ class PhotoController extends Controller
         // レスポンスコードは201(CREATED)を返却する
         return response($photo, 201);
     }
+
+    /**
+     * 写真ダウンロード
+     * @param Photo $photo
+     * @return \Illuminate\Http\Response
+     */
+    public function download(Photo $photo)
+    {
+        // 写真の存在チェック
+        //if (! Storage::exists($photo->filename)) {
+        //    abort(404);
+        //}
+        $filePath = 'public/photos/' . $photo->filename;
+        $mimeType = Storage::mimeType($filePath);
+        $disposition = 'attachment; filename="' . $photo->filename . '"';
+        $headers = [
+            'Content-Type' => $mimeType,
+            'Content-Disposition' => $disposition,
+        ];
+        return Storage::download($filePath, $photo->filename, $headers);
+    }
 }

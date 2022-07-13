@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 use App\Photo;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 

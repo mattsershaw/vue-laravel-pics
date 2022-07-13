@@ -19,6 +19,11 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    /** JSONに含める属性 */
+    protected $visible = [
+        'name',
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -45,9 +50,4 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Photo');
     }
-
-    /** JSONに含める属性 */
-    protected $visible = [
-        'name',
-    ];
 }

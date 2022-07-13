@@ -39,6 +39,7 @@ class PhotoController extends Controller
         // storage/app/public配下に保存する
         //Storage::putFileAs('photos', $photo->filename, 'public');
         $request->photo->storeAs('photos', $photo->filename, 'public');
+        // ddd($request);
 
         // データベースエラー時にファイル削除を行うため
         // トランザクションを利用する

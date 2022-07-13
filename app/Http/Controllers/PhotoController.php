@@ -9,6 +9,8 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Comment;
+use App\Http\Requests\StoreComment;
 
 class PhotoController extends Controller
 {
@@ -76,5 +78,24 @@ class PhotoController extends Controller
             'Content-Disposition' => $disposition,
         ];
         return Storage::download($filePath, $photo->filename, $headers);
+    }
+
+    /**
+     * コメント投稿
+     * @param Photo $photo
+     * @param StoreComment $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addComment(Photo $photo, StoreComment $request)
+    {
+        $comment = new Comment();
+        $comment->content = $request->get('content');
+        $comment->user_id = Auth::user()->id;
+        $photo->comments()->save($comment);
+
+        // authorリレーションをロードするためにコメントを取得しなおす
+        $new_comment = Comment::where('id', $comment->id)->with('author')->first();
+
+        return response($new_comment, 201);
     }
 }

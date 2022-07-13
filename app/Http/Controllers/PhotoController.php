@@ -98,4 +98,17 @@ class PhotoController extends Controller
 
         return response($new_comment, 201);
     }
+
+    /**
+     * 写真詳細
+     * @param string $id
+     * @return Photo
+     */
+    public function show(string $id)
+    {
+        $photo = Photo::where('id', $id)
+            ->with(['owner', 'comments.author'])->first();
+
+        return $photo ?? abort(404);
+    }
 }

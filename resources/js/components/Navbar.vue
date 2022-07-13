@@ -5,13 +5,13 @@
     </RouterLink>
     <div class="navbar__menu">
       <div v-if="isLogin" class="navbar__item">
-        <button class="button">
+        <button class="button" @click="showForm = ! showForm">
           <i class="icon ion-md-add"></i>
           Submit a photo
         </button>
       </div>
       <span v-if="isLogin" class="navbar__item">
-        username
+        {{ username }}
       </span>
       <div v-else class="navbar__item">
         <RouterLink class="button button--link" to="/login">
@@ -19,6 +19,8 @@
         </RouterLink>
       </div>
     </div>
+    <!-- ユーザ名表示 -->
+    <PhotoForm v-model="showForm" />
   </nav>
 </template>
 

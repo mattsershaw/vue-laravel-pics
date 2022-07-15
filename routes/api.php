@@ -40,3 +40,9 @@ Route::post('/photos/{photo}/comments', 'PhotoController@addComment')->name('pho
 
 // 写真ダウンロード
 Route::get('/photos/{photo}/download', 'PhotoController@download');
+
+// いいね
+Route::put('/photos/{id}/like', 'PhotoController@like')->name('photo.like');
+
+// いいね解除
+Route::delete('/photos/{id}/like', 'PhotoController@unlike');

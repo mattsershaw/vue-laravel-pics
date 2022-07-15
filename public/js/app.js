@@ -2250,11 +2250,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     item: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    like: function like() {
+      this.$emit('like', {
+        id: this.item.id,
+        liked: this.item.liked_by_user
+      });
     }
   }
 });
@@ -2683,6 +2693,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2789,27 +2804,111 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    onLikeClick: function onLikeClick() {
+      if (!this.isLogin) {
+        alert('いいね機能を使うにはログインしてください。');
+        return false;
+      }
+
+      if (this.photo.liked_by_user) {
+        this.unlike();
+      } else {
+        this.like();
+      }
+    },
+    like: function like() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.put("/api/photos/".concat(_this3.id, "/like"));
+
+              case 2:
+                response = _context3.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_0__["OK"])) {
+                  _context3.next = 6;
+                  break;
+                }
+
+                _this3.$store.commit('error/setCode', response.status);
+
+                return _context3.abrupt("return", false);
+
+              case 6:
+                _this3.photo.likes_count = _this3.photo.likes_count + 1;
+                _this3.photo.liked_by_user = true;
+
+              case 8:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    unlike: function unlike() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios["delete"]("/api/photos/".concat(_this4.id, "/like"));
+
+              case 2:
+                response = _context4.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_0__["OK"])) {
+                  _context4.next = 6;
+                  break;
+                }
+
+                _this4.$store.commit('error/setCode', response.status);
+
+                return _context4.abrupt("return", false);
+
+              case 6:
+                _this4.photo.likes_count = _this4.photo.likes_count - 1;
+                _this4.photo.liked_by_user = false;
+
+              case 8:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     }
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this3 = this;
+        var _this5 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-          return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+          return _regeneratorRuntime().wrap(function _callee5$(_context5) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context5.prev = _context5.next) {
                 case 0:
-                  _context3.next = 2;
-                  return _this3.fetchPhoto();
+                  _context5.next = 2;
+                  return _this5.fetchPhoto();
 
                 case 2:
                 case "end":
-                  return _context3.stop();
+                  return _context5.stop();
               }
             }
-          }, _callee3);
+          }, _callee5);
         }))();
       },
       immediate: true
@@ -2839,6 +2938,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -2912,27 +3012,126 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    onLikeClick: function onLikeClick(_ref) {
+      var id = _ref.id,
+          liked = _ref.liked;
+
+      if (!this.$store.getters['auth/check']) {
+        alert('いいね機能を使うにはログインしてください。');
+        return false;
+      }
+
+      if (liked) {
+        this.unlike(id);
+      } else {
+        this.like(id);
+      }
+    },
+    like: function like(id) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.put("/api/photos/".concat(id, "/like"));
+
+              case 2:
+                response = _context2.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_0__["OK"])) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                _this2.$store.commit('error/setCode', response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 6:
+                _this2.photos = _this2.photos.map(function (photo) {
+                  if (photo.id === response.data.photo_id) {
+                    photo.likes_count += 1;
+                    photo.liked_by_user = true;
+                  }
+
+                  return photo;
+                });
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    unlike: function unlike(id) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios["delete"]("/api/photos/".concat(id, "/like"));
+
+              case 2:
+                response = _context3.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_0__["OK"])) {
+                  _context3.next = 6;
+                  break;
+                }
+
+                _this3.$store.commit('error/setCode', response.status);
+
+                return _context3.abrupt("return", false);
+
+              case 6:
+                _this3.photos = _this3.photos.map(function (photo) {
+                  if (photo.id === response.data.photo_id) {
+                    photo.likes_count -= 1;
+                    photo.liked_by_user = false;
+                  }
+
+                  return photo;
+                });
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this2 = this;
+        var _this4 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-          return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+          return _regeneratorRuntime().wrap(function _callee4$(_context4) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context4.prev = _context4.next) {
                 case 0:
-                  _context2.next = 2;
-                  return _this2.fetchPhotos();
+                  _context4.next = 2;
+                  return _this4.fetchPhotos();
 
                 case 2:
                 case "end":
-                  return _context2.stop();
+                  return _context4.stop();
               }
             }
-          }, _callee2);
+          }, _callee4);
         }))();
       },
       immediate: true
@@ -3800,11 +3999,18 @@ var render = function () {
               "button",
               {
                 staticClass: "photo__action photo__action--like",
+                class: { "photo__action--liked": _vm.item.liked_by_user },
                 attrs: { title: "Like photo" },
+                on: {
+                  click: function ($event) {
+                    $event.preventDefault()
+                    return _vm.like.apply(null, arguments)
+                  },
+                },
               },
               [
                 _c("i", { staticClass: "icon ion-md-heart" }),
-                _vm._v("12\n      "),
+                _vm._v(_vm._s(_vm.item.likes_count) + "\n      "),
               ]
             ),
             _vm._v(" "),
@@ -4358,7 +4564,19 @@ var render = function () {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "photo-detail__pane" }, [
-            _vm._m(0),
+            _c(
+              "button",
+              {
+                staticClass: "button button--like",
+                class: { "button--liked": _vm.photo.liked_by_user },
+                attrs: { title: "Like photo" },
+                on: { click: _vm.onLikeClick },
+              },
+              [
+                _c("i", { staticClass: "icon ion-md-heart" }),
+                _vm._v(_vm._s(_vm.photo.likes_count) + "\n    "),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "a",
@@ -4375,7 +4593,7 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _vm._m(1),
+            _vm._m(0),
             _vm._v(" "),
             _vm.photo.comments.length > 0
               ? _c(
@@ -4464,7 +4682,7 @@ var render = function () {
                       },
                     }),
                     _vm._v(" "),
-                    _vm._m(2),
+                    _vm._m(1),
                   ]
                 )
               : _vm._e(),
@@ -4474,16 +4692,6 @@ var render = function () {
     : _vm._e()
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "button button--like", attrs: { title: "Like photo" } },
-      [_c("i", { staticClass: "icon ion-md-heart" }), _vm._v("12\n    ")]
-    )
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -4539,6 +4747,7 @@ var render = function () {
             key: photo.id,
             staticClass: "grid__item",
             attrs: { item: photo },
+            on: { like: _vm.onLikeClick },
           })
         }),
         1
